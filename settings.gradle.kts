@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "BtMic"
+rootProject.name = "LocationTracker"
 include(":app")
