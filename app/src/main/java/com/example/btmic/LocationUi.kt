@@ -9,7 +9,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
@@ -43,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
@@ -232,17 +232,19 @@ fun ShareCard(sharing: Boolean, onToggle: (Boolean) -> Unit) {
             color = Color.White.copy(alpha = 0.55f), fontSize = 12.sp
         )
         Spacer(Modifier.height(18.dp))
+
+        val pillModifier = if (sharing) {
+            Modifier
+                .background(Rose.copy(alpha = 0.18f), RoundedCornerShape(24.dp))
+                .border(1.dp, Rose.copy(alpha = 0.6f), RoundedCornerShape(24.dp))
+        } else {
+            Modifier.background(Brush.linearGradient(listOf(Cyan, Violet)), RoundedCornerShape(24.dp))
+        }
+
         Box(
             Modifier
                 .clip(RoundedCornerShape(24.dp))
-                .background(
-                    if (sharing) Rose.copy(alpha = 0.18f)
-                    else Brush.linearGradient(listOf(Cyan, Violet)) as Brush
-                )
-                .then(
-                    if (sharing) Modifier.border(1.dp, Rose.copy(alpha = 0.6f), RoundedCornerShape(24.dp))
-                    else Modifier
-                )
+                .then(pillModifier)
                 .clickable { onToggle(!sharing) }
                 .padding(horizontal = 32.dp, vertical = 14.dp)
         ) {
@@ -299,7 +301,7 @@ fun PinIcon(modifier: Modifier, color: Color) {
             color, radius = w * 0.1f,
             center = Offset(w * 0.5f, h * 0.38f)
         )
-        val path = androidx.compose.ui.graphics.Path().apply {
+        val path = Path().apply {
             moveTo(w * 0.5f, h * 0.05f)
             cubicTo(w * 0.82f, h * 0.05f, w * 0.9f, h * 0.3f, w * 0.72f, h * 0.55f)
             lineTo(w * 0.5f, h * 0.95f)
