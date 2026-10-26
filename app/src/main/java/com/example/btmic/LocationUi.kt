@@ -1,4 +1,4 @@
-package com.example.btmic
+package com.example.loctracker
 
 import android.annotation.SuppressLint
 import android.content.Intent
