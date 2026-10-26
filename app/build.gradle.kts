@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.btmic"
+    namespace = "com.example.loctracker"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.btmic"
+        applicationId = "com.example.loctracker"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
