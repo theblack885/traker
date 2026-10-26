@@ -1,4 +1,4 @@
-package com.example.btmic
+package com.example.loctracker
 
 import android.content.Context
 
