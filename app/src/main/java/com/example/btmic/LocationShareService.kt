@@ -14,6 +14,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
+import android.os.Bundle
 import android.os.IBinder
 import android.os.Looper
 import androidx.core.content.ContextCompat
@@ -89,6 +90,12 @@ class LocationShareService : Service(), LocationListener {
     override fun onLocationChanged(location: Location) {
         sendLocation(location.latitude, location.longitude)
     }
+
+    override fun onProviderEnabled(provider: String) {}
+    override fun onProviderDisabled(provider: String) {}
+
+    @Deprecated("Deprecated in Java")
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
 
     private fun sendLocation(lat: Double, lng: Double) {
         val host = LocationState.serverHost
