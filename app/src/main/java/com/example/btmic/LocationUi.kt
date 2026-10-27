@@ -329,7 +329,7 @@ fun LocationMap(room: String) {
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <style>
           html,body{margin:0;background:#070712;font-family:-apple-system,Segoe UI,Roboto,sans-serif;height:100%;overflow:hidden}
-          #map{height:100%;width:100%;filter:saturate(0.9)}
+          #map{height:100%;width:100%;filter:invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9) saturate(0.9)}
           #card{
             position:absolute;left:14px;right:14px;bottom:14px;
             background:rgba(19,15,43,0.85);
@@ -340,6 +340,7 @@ fun LocationMap(room: String) {
             padding:16px 18px;
             color:#fff;
             box-shadow:0 10px 30px rgba(0,0,0,0.4);
+            display:none;
           }
           #status{display:flex;align-items:center;gap:8px;margin-bottom:8px}
           #dot{width:9px;height:9px;border-radius:50%;background:#34E39B;box-shadow:0 0 10px #34E39B;animation:blink 1.6s infinite}
@@ -361,9 +362,9 @@ fun LocationMap(room: String) {
         </div>
         <script>
         var map = L.map('map', {zoomControl:true, attributionControl:true}).setView([20.5937,78.9629], 4);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap, &copy; CARTO',
-            subdomains: 'abcd', maxZoom: 19
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            subdomains: 'abc', maxZoom: 19
         }).addTo(map);
 
         var pulseIcon = L.divIcon({
@@ -390,6 +391,7 @@ fun LocationMap(room: String) {
         function poll() {
             fetch('$base/location/$room').then(function(r){ return r.json(); }).then(function(d){
                 if (d && d.lat) {
+                    document.getElementById('card').style.display = 'block';
                     var pos = [d.lat, d.lng];
                     if (!marker) {
                         marker = L.marker(pos, {icon: pulseIcon}).addTo(map);
